@@ -31,7 +31,7 @@ else:
     print 'Creating coronal plane slices..'
     imC=np.array(np.reshape(np.repeat(np.transpose(im1,(0,2,1)),3),imC.shape))
     print 'Creating transverse plane slices..'
-    imT=np.array(np.repeat(np.reshape(np.repeat(np.flipud(im1),3),[imT.shape[0],imT.shape[1],im1.shape[2],imT.shape[3]]),np.int(np.floor(float(im1.shape[1])/float(im1.shape[2]))),2))
+    imT=np.array(np.repeat(np.reshape(np.repeat(np.fliplr(im1),3),[imT.shape[0],imT.shape[1],im1.shape[2],imT.shape[3]]),np.int(np.floor(float(im1.shape[1])/float(im1.shape[2]))),2))
     print 'Creating sagittal plane slices..'
     imS=np.array(np.repeat(np.reshape(np.repeat(np.transpose(im1,(2,1,0)),3),[imS.shape[0],imS.shape[1],im1.shape[0],imS.shape[3]]),np.int(np.floor(float(im1.shape[1])/float(im1.shape[0]))),2))
     
