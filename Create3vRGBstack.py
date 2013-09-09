@@ -24,13 +24,43 @@ else:
     
     print 'Calculating final image volume..'
     
-    imN = np.zeros(Ishape,np.uint16)
+    imN = np.zeros([Ishape[0]+Ishape[2],Ishape[1]+Ishape[2],Ishape[1],3],np.uint16)
     
+    print 'Calculating coronal plane area..'
+    imC=imN[Ishape[2]:,0:Ishape[2],:,:]
+    Cshape=imC.shape
+    print 'Creating coronal plane slices..'
+    imC=np.array(np.reshape(np.repeat(np.transpose(im1,(0,2,1)),3),Cshape))
+    gc.collect()
+    #multiply intensity with channel colour levels and add to existing signals
+    print 'Colouring coronal plane and adding to final image..'
+    Cthird=imC.size/3
+    imN[Ishape[2]:,0:Ishape[2],:,:]=np.multiply(imC,np.reshape(np.tile((colourL[0]/255.0),Cthird),imC.shape))
+    
+    imC=None
+    gc.collect()
+    
+    print 'Calculating sagittal plane area..'
+    imS=imN[0:Ishape[2],Ishape[2]:,:,:]
+    Sshape=imS.shape
+    print 'Creating sagittal plane slices..'
+    imS=np.array(np.repeat(np.reshape(np.repeat(np.transpose(im1,(2,1,0)),3),[Sshape[0],Sshape[1],Ishape[0],Sshape[3]]),np.int(np.floor(float(Ishape[1])/float(Ishape[0]))),2))
+    print 'Colouring sagittal plane and adding to final image..'
+    Sthird=imS.size/3
+    imN[0:Ishape[2],Ishape[2]:,:Sshape[2],:]=np.multiply(imS,np.reshape(np.tile((colourL[0]/255.0),Sthird),imS.shape))
+    
+    imS=None
+    gc.collect()
+    
+    print 'Calculating transverse plane area..'
+    imT=imN[Ishape[2]:,Ishape[2]:,:,:]
+    Tshape=imT.shape
     print 'Creating transverse plane slices..'
-    imT=np.array(np.reshape(np.repeat(im1,3),[Ishape[0],Ishape[1],Ishape[2],3]),np.uint16)
+    imT=np.array(np.repeat(np.reshape(np.repeat(im1[:,:,::-1],3),[Tshape[0],Tshape[1],Ishape[2],Tshape[3]]),np.int(np.floor(float(Ishape[1])/float(Ishape[2]))),2))
     print 'Colouring transverse plane and adding to final image..'
-    Tthird=Tsize/3 
-    imN=np.multiply(imT,np.reshape(np.tile((colourL[0]/255.0),Tthird),Ishape))
+    Tthird=imT.size/3
+    Tshape=imT.shape 
+    imN[Ishape[2]:,Ishape[2]:,:Tshape[2],:]=np.multiply(imT,np.reshape(np.tile((colourL[0]/255.0),Tthird),imT.shape))
     
     imT=None
     gc.collect()
@@ -46,12 +76,25 @@ else:
             print '\n\nError: Images must be the same size!'
             print 'Skipping: ', str(sys.argv[i])
         else:
+            print 'Creating coronal plane slices..'
+            imC=np.array(np.reshape(np.repeat(np.transpose(im1,(0,2,1)),3),Cshape))
+            print 'Colouring coronal plane and adding to final image..'
+            imN[Ishape[2]:,0:Ishape[2],:,:]=np.add(np.uint16(np.multiply(imC,np.reshape(np.tile((colourL[(i-2)]/255.0),Cthird),imC.shape))),imN[Ishape[2]:,0:Ishape[2],:,:])
+            imC=None
+            gc.collect()
             
             print 'Creating transverse plane slices..'
-            imT=np.array(np.reshape(np.repeat(im1[:,:,::-1],3),[Ishape[0],Ishape[1],Ishape[2],3]),np.uint16)
+            imT=np.array(np.repeat(np.reshape(np.repeat(im1[:,:,::-1],3),[Tshape[0],Tshape[1],Ishape[2],Tshape[3]]),np.int(np.floor(float(Ishape[1])/float(Ishape[2]))),2))
             print 'Colouring transverse plane and adding to final image..'
-            imN=np.add(np.uint16(np.multiply(imT,np.reshape(np.tile((colourL[(i-2)]/255.0),Tthird),imT.shape))),imN[Ishape[2]:,Ishape[2]:,:Ishape[2],:])
+            imN[Ishape[2]:,Ishape[2]:,:Tshape[2],:]=np.add(np.uint16(np.multiply(imT,np.reshape(np.tile((colourL[(i-2)]/255.0),Tthird),imT.shape))),imN[Ishape[2]:,Ishape[2]:,:Tshape[2],:])
             imT=None
+            gc.collect()
+            
+            print 'Creating sagittal plane slices..'
+            imS=np.array(np.repeat(np.reshape(np.repeat(np.transpose(im1,(2,1,0)),3),[Sshape[0],Sshape[1],Ishape[0],Sshape[3]]),np.int(np.floor(float(Ishape[1])/float(Ishape[0]))),2))
+            print 'Colouring sagittal plane and adding to final image..'
+            imN[0:Ishape[2],Ishape[2]:,:Sshape[2],:]=np.add(np.uint16(np.multiply(imS,np.reshape(np.tile((colourL[(i-2)]/255.0),Sthird),imS.shape))),imN[0:Ishape[2],Ishape[2]:,:Sshape[2],:])
+            imS=None
             gc.collect()
             
             print 'Finalising colour merge..'

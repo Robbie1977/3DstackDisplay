@@ -20,7 +20,7 @@ else:
                     domain, options = nrrd.read(domfile)
                 else:
                     domain = np.zeros(readdata.shape,np.uint8)
-                domain[readdata==i]=np.uint8(30)
+                domain[readdata==i]=np.uint8(55)
                 nrrd.write(domfile, domain)
     
     
