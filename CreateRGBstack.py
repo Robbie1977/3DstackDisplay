@@ -28,9 +28,9 @@ else:
     
     print 'Creating transverse plane slices..'
     imT=np.array(np.reshape(np.repeat(im1,3),[Ishape[0],Ishape[1],Ishape[2],3]),np.uint16)
+    Tshape=imT.shape
     print 'Colouring transverse plane and adding to final image..'
-    Tthird=Tsize/3 
-    imN=np.multiply(imT,np.reshape(np.tile((colourL[0]/255.0),Tthird),Ishape))
+    imN=np.multiply(imT,np.reshape(np.tile((colourL[0]/255.0),Tsize),Tshape))
     
     imT=None
     gc.collect()
@@ -48,9 +48,9 @@ else:
         else:
             
             print 'Creating transverse plane slices..'
-            imT=np.array(np.reshape(np.repeat(im1[:,:,::-1],3),[Ishape[0],Ishape[1],Ishape[2],3]),np.uint16)
+            imT=np.array(np.reshape(np.repeat(im1,3),[Ishape[0],Ishape[1],Ishape[2],3]),np.uint16)
             print 'Colouring transverse plane and adding to final image..'
-            imN=np.add(np.uint16(np.multiply(imT,np.reshape(np.tile((colourL[(i-2)]/255.0),Tthird),imT.shape))),imN[Ishape[2]:,Ishape[2]:,:Ishape[2],:])
+            imN=np.add(np.uint16(np.multiply(imT,np.reshape(np.tile((colourL[(i-2)]/255.0),Tsize),Tshape))),imN)
             imT=None
             gc.collect()
             
