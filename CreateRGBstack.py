@@ -10,7 +10,7 @@ if (len(sys.argv) < 3):
     print 'e.g. python CreateGIFfromNRRD.py outputImages.nrrd firstImage.nrrd [NthImage.nrrd ....]'
 else:
 
-    print 'Creating RGB stacks:', str(sys.argv[2]).replace('.nrrd','_R|G|B.nrrd')
+    print 'Creating RGB stacks:', str(sys.argv[1]).replace('.nrrd','_R|G|B.nrrd')
     print 'Loading image:', str(sys.argv[2])
     
     readdata, options = nrrd.read(str(sys.argv[2]))
