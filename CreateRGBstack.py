@@ -7,7 +7,7 @@ colourL=np.array([[0,0,255],[255,0,0],[0,255,0],[255,26,185],[255,211,0],[0,132,
 
 if (len(sys.argv) < 3):
     print 'Error: I need at least one image to work with!'
-    print 'e.g. python CreateGIFfromNRRD.py outputImages.nrrd firstImage.nrrd [NthImage.nrrd ....]'
+    print 'e.g. python CreateRGBstack.py outputImages.nrrd firstImage.nrrd [NthImage.nrrd ....]'
 else:
 
     print 'Creating RGB stacks:', str(sys.argv[1]).replace('.nrrd','_R|G|B.nrrd')
