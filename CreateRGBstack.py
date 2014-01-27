@@ -69,7 +69,7 @@ else:
     
     print 'converting to 8-bit..'    
     mi=np.divide(np.max(imN),255.0)
-    imN=np.unit8(np.floor(np.divide(imN,mi,np.float16)))
+    imN=np.uint8(np.floor(np.divide(imN,mi,np.float16)))
     gc.collect()
         
     
