@@ -25,7 +25,7 @@ else:
     
     if (mi > 255):
         mi=np.divide(mi,255.0)
-        im1=np.uint8(np.floor(np.divide(im1,mi,np.float16)))
+        im1=np.uint8(np.floor(np.divide(im1,mi)))
     
     print 'Calculating final image volume..'
     
@@ -50,7 +50,7 @@ else:
         mi=np.max(im1)
         if (mi > 255):
             mi=np.divide(mi,255.0)
-            im1=np.uint8(np.floor(np.divide(im1,mi,np.float16)))
+            im1=np.uint8(np.floor(np.divide(im1,mi)))
         if (Tsize <> im1.size):
             print '\n\nError: Images must be the same size!'
             print 'Skipping: ', str(sys.argv[i])
@@ -69,7 +69,7 @@ else:
     
     print 'converting to 8-bit..'    
     mi=np.divide(np.max(imN),255.0)
-    imN=np.uint8(np.floor(np.divide(imN,mi,np.float16)))
+    imN=np.uint8(np.floor(np.divide(imN,mi)))
     gc.collect()
         
     
