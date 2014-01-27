@@ -21,6 +21,11 @@ else:
     
     Tsize=im1.size
     
+    mi=np.max(im1)
+    
+    if (mi > 255):
+        mi=np.divide(mi,255.0, np.float64)
+        im1=np.floor(np.divide(im1,mi,np.float16),np.uint8)
     
     print 'Calculating final image volume..'
     
@@ -42,6 +47,10 @@ else:
         print 'Adding data from ', str(sys.argv[i])
         readdata, options = nrrd.read(str(sys.argv[i])) 
         im1 = readdata
+        mi=np.max(im1)
+        if (mi > 255):
+            mi=np.divide(mi,255.0, np.float64)
+            im1=np.floor(np.divide(im1,mi,np.float16),np.uint8)
         if (Tsize <> im1.size):
             print '\n\nError: Images must be the same size!'
             print 'Skipping: ', str(sys.argv[i])
