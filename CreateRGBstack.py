@@ -54,12 +54,13 @@ else:
             imT=None
             gc.collect()
             
-            print 'Finalising colour merge..'
-            imN[imN>255]=np.uint16(255)
-            gc.collect()
+#            print 'Finalising colour merge..'
+#            imN[imN>255]=np.uint16(255)
+#            gc.collect()
     
     print 'converting to 8-bit..'    
-    imN=np.uint8(imN)
+    mi=np.divide(np.max(imN),255.0, np.float64)
+    imN=np.floor(np.divide(imN,mi,np.float16),np.uint8)
     gc.collect()
         
     
