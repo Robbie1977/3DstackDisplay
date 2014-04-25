@@ -13,6 +13,11 @@ else:
     print 'Creating RGB stacks:', str(sys.argv[1]).replace('.nrrd','_R|G|B.nrrd')
     print 'Loading image:', str(sys.argv[2])
     
+    refFile = str(sys.argv[1]).replace('.nrrd','_Key.rtf')
+    refSS = '{\rtf1\ansi\deff0 {\colortbl;'
+    refSE = '}'
+    refFE = '/n}'
+    
     readdata, options = nrrd.read(str(sys.argv[2]))
     
     im1 = readdata
@@ -38,6 +43,9 @@ else:
     imN=np.multiply(imT,np.reshape(np.tile((colourL[0]/255.0),Tsize),Tshape))
     
     imT=None
+    
+    refFN = '\n\cf1 \n' + str(sys.argv[2]) + '\line'
+    refSS = refSS + '\red' + str(colourL[0][0]) + '\green' + str(colourL[0][1]) +'\blue' + str(colourL[0][2]) + ';'
     gc.collect()
     
     print 'Finalising colour merge..'
@@ -61,6 +69,8 @@ else:
             print 'Colouring transverse plane and adding to final image..'
             imN=np.add(np.uint16(np.multiply(imT,np.reshape(np.tile((colourL[(i-2)]/255.0),Tsize),Tshape))),imN)
             imT=None
+            refFN = refFN + '\n\cf1 \n' + str(sys.argv[i]) + '\line'
+            refSS = refSS + '\red' + str(colourL[(i-2)][0]) + '\green' + str(colourL[(i-2)][1]) +'\blue' + str(colourL[(i-2)][2]) + ';'
             gc.collect()
             
 #            print 'Finalising colour merge..'
@@ -80,6 +90,10 @@ else:
     nrrd.write(str(sys.argv[1]).replace('.nrrd','_G.nrrd'),imN[:,:,:,1])
     print 'Saving blue image..'
     nrrd.write(str(sys.argv[1]).replace('.nrrd','_B.nrrd'),imN[:,:,:,2])
+    
+    
+    with open(refFile, "w") as text_file:
+        text_file.write("%s%s%s%s" % (refSS, refSE, refFN, refFE))
     
     
 print 'Done.'
