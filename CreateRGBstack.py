@@ -14,9 +14,9 @@ else:
     print 'Loading image:', str(sys.argv[2])
     
     refFile = str(sys.argv[1]).replace('.nrrd','_Key.rtf')
-    refSS = '{\rtf1\ansi\deff0 {\colortbl;'
+    refSS = '{\\rtf1\\ansi\\deff0 \n{\\colortbl;'
     refSE = '}'
-    refFE = '/n}'
+    refFE = '\n}'
     
     readdata, options = nrrd.read(str(sys.argv[2]))
     
@@ -44,8 +44,8 @@ else:
     
     imT=None
     
-    refFN = '\n\cf1 \n' + str(sys.argv[2]) + '\line'
-    refSS = refSS + '\red' + str(colourL[0][0]) + '\green' + str(colourL[0][1]) +'\blue' + str(colourL[0][2]) + ';'
+    refFN = '\n\\cf1 \n' + str(sys.argv[2]) + '\\line'
+    refSS = refSS + '\\red' + str(colourL[0][0]) + '\\green' + str(colourL[0][1]) +'\\blue' + str(colourL[0][2]) + ';'
     gc.collect()
     
     print 'Finalising colour merge..'
