@@ -69,8 +69,8 @@ else:
             print 'Colouring transverse plane and adding to final image..'
             imN=np.add(np.uint16(np.multiply(imT,np.reshape(np.tile((colourL[(i-2)]/255.0),Tsize),Tshape))),imN)
             imT=None
-            refFN = refFN + '\n\cf1 \n' + str(sys.argv[i]) + '\line'
-            refSS = refSS + '\red' + str(colourL[(i-2)][0]) + '\green' + str(colourL[(i-2)][1]) +'\blue' + str(colourL[(i-2)][2]) + ';'
+            refFN = refFN + '\n\\cf' + str((i-1)) + ' \n' + str(sys.argv[i]) + '\\line'
+            refSS = refSS + '\\red' + str(colourL[(i-2)][0]) + '\\green' + str(colourL[(i-2)][1]) +'\\blue' + str(colourL[(i-2)][2]) + ';'
             gc.collect()
             
 #            print 'Finalising colour merge..'
