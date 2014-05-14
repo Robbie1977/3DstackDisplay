@@ -92,6 +92,9 @@ else:
     nrrd.write(str(sys.argv[1]).replace('.nrrd','_B.nrrd'),imN[:,:,:,2])
     
     
+    
+    print 'Saving colour key data to...'
+    print refFile
     with open(refFile, "w") as text_file:
         text_file.write("%s%s%s%s" % (refSS, refSE, refFN, refFE))
     
