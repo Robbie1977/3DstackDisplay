@@ -11,7 +11,7 @@ def thumbnail(im, size=(25,25)):
 
 if (len(sys.argv) < 4):
     print 'Error: missing arguments!'
-    print 'e.g. python Index2domain.py template DomainPrefix indexfile1.nrrd indexfileN.nrrd ...'
+    print 'e.g. python Index2MaxProjPNG_tn.py template DomainPrefix indexfile1.nrrd indexfileN.nrrd ...'
 else:
     print 'Loading template...'
     data1, header1 = nrrd.read(str(sys.argv[1]))
