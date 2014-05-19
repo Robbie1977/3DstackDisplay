@@ -18,7 +18,7 @@ else:
         readdata, options = nrrd.read(str(sys.argv[x]))
         flat = np.transpose(np.max(readdata,axis=2))
         tnfile = os.path.basename(sys.argv[x]).replace('.nrrd','_tn.png')
-        thumbnail(png.from_array(flat,'L'), size=(120,60)).save(tnfile)
+        thumbnail(Image.fromarray(flat), size=(120,60)).save(tnfile,"PNG")
         del flat
 
 print 'Done.'

@@ -28,7 +28,7 @@ else:
                 domain = np.zeros(readdata.shape,dtype=np.uint8)
                 domain[readdata==i]=np.uint8(255)
                 png1=np.max((np.transpose((np.max(domain,axis=2))), template.T),axis=0)
-                thumbnail(png.from_array(png1,'L'), size=(120,60)).save(domfile)
+                thumbnail(Image.fromarray(png1), size=(120,60)).save(domfile,"PNG")
                 del domain, png1
 
 print 'Done.'
