@@ -18,9 +18,9 @@ else:
         readdata, options = nrrd.read(str(sys.argv[x]))
         flat = np.transpose(np.max(readdata,axis=2))
         tnfile = os.path.basename(sys.argv[x]).replace('.nrrd','_tn.png')
-        if np.shape(png1,axis=0) > np.shape(png1,axis=1):
+        if np.shape(flat,axis=0) > np.shape(flat,axis=1):
           thumbnail(Image.fromarray(flat), size=(120,60)).save(tnfile,"PNG")
-        elif np.shape(png1,axis=0) < np.shape(png1,axis=1):
+        elif np.shape(flat,axis=0) < np.shape(flat,axis=1):
           thumbnail(Image.fromarray(flat), size=(60,120)).save(tnfile,"PNG")
         else:
           thumbnail(Image.fromarray(flat), size=(60,60)).save(tnfile,"PNG")
