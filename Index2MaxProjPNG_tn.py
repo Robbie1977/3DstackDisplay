@@ -28,9 +28,9 @@ else:
                 domain = np.zeros(readdata.shape,dtype=np.uint8)
                 domain[readdata==i]=np.uint8(255)
                 png1=np.max((np.transpose((np.max(domain,axis=2))), template.T),axis=0)
-                if np.shape(png1,axis=0) > np.shape(png1,axis=1):
+                if np.shape(png1)[0] > np.shape(png1)[1]:
                   thumbnail(Image.fromarray(png1), size=(120,60)).save(domfile,"PNG")
-                elif np.shape(png1,axis=0) < np.shape(png1,axis=1):
+                elif np.shape(png1)[0] < np.shape(png1)[1]:
                   thumbnail(Image.fromarray(png1), size=(60,120)).save(domfile,"PNG")
                 else:
                   thumbnail(Image.fromarray(png1), size=(60,60)).save(domfile,"PNG")
