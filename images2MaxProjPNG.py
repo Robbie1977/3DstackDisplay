@@ -19,7 +19,7 @@ if (len(sys.argv) < 2):
                 for x in range(1,(len(sys.argv))):
                     print 'creating tumbnail of image ', sys.argv[x]
                     readdata, options = nrrd.read(str(sys.argv[x]))
-                    flat = np.transpose(np.max(domain,axis=2))
+                    flat = np.transpose(np.max(readdata,axis=2))
                     rfile = os.path.basename(sys.argv[x]).replace('.nrrd','.png')
                     png.from_array(flat,'L').save(rfile)
                     thumbnail(rfile, size=(120,60))
