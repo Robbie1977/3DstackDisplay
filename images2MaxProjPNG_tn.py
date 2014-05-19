@@ -9,26 +9,16 @@ def thumbnail(im, size=(25,25)):
     im = im.resize(size, Image.ANTIALIAS)
     return im
 
-if (len(sys.argv) < 4):
+if (len(sys.argv) < 2):
     print 'Error: missing arguments!'
-    print 'e.g. python Index2domain.py template DomainPrefix indexfile1.nrrd indexfileN.nrrd ...'
+    print 'e.g. python images2MaxProjPNG_tn.py image1.nrrd imageN.nrrd ...'
 else:
-    print 'Loading template...'
-    data1, header1 = nrrd.read(str(sys.argv[1]))
-    template=np.array((np.max(data1,axis=2)*0.5),dtype=np.uint8)
-    del data1, header1
-    print 'Adding to domains', str(sys.argv[2]), '....'
-    for x in range(3,(len(sys.argv))):
-        print 'adding data from file', sys.argv[x]
+    for x in range(1,(len(sys.argv))):
+        print 'creating tumbnail of image ', sys.argv[x]
         readdata, options = nrrd.read(str(sys.argv[x]))
-        for i in np.unique(readdata[readdata>0]):
-            if np.uint8(i) in readdata:
-                print 'appending index', str(i)
-                domfile = str(sys.argv[2]) + str(i).zfill(4) + '_tn.png'
-                domain = np.zeros(readdata.shape,dtype=np.uint8)
-                domain[readdata==i]=np.uint8(255)
-                png1=np.max((np.transpose((np.max(domain,axis=2))), template.T),axis=0)
-                thumbnail(png.from_array(png1,'L'), size=(120,60)).save(domfile)
-                del domain, png1
+        flat = np.transpose(np.max(domain,axis=2))
+        tnfile = os.path.basename(sys.argv[x]).replace('.nrrd','_tn.png')
+        thumbnail(png.from_array(flat,'L'), size=(120,60)).save(tnfile)
+        del flat
 
 print 'Done.'
