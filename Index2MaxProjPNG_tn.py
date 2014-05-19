@@ -5,12 +5,9 @@ import nrrd, png
 from PIL import Image
 
 
-def thumbnail(file, size=(25,25)):
-    im = Image.open(file)
+def thumbnail(im, size=(25,25)):
     im = im.resize(size, Image.ANTIALIAS)
-    tnFile = file.replace('.png','_tn.png')
-    im.save(tnFile,"PNG")
-    return True
+    return im
 
 if (len(sys.argv) < 4):
     print 'Error: missing arguments!'
@@ -27,13 +24,11 @@ else:
         for i in np.unique(readdata[readdata>0]):
             if np.uint8(i) in readdata:
                 print 'appending index', str(i)
-                domfile = str(sys.argv[2]) + str(i).zfill(4) + '.png'
+                domfile = str(sys.argv[2]) + str(i).zfill(4) + '_tn.png'
                 domain = np.zeros(readdata.shape,dtype=np.uint8)
                 domain[readdata==i]=np.uint8(255)
                 png1=np.max((np.transpose((np.max(domain,axis=2))), template.T),axis=0)
-                png.from_array(png1,'L').save(domfile)
-                thumbnail(domfile, size=(120,60))
+                thumbnail(png.from_array(png1,'L'), size=(120,60)).save(domfile)
                 del domain, png1
-
 
 print 'Done.'
