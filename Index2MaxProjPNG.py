@@ -32,7 +32,10 @@ else:
                 domain[readdata==i]=np.uint8(255)
                 png1=np.max((np.transpose((np.max(domain,axis=2))), template.T),axis=0)
                 png.from_array(png1,'L').save(domfile)
-                thumbnail(domfile, size=(120,60))
+                if np.shape(png1)[0] < np.shape(png1)[1]:
+                  thumbnail(domfile, size=(120,60))
+                else:
+                  thumbnail(domfile, size=(60,120))
                 del domain, png1
 
 
