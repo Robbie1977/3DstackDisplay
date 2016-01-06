@@ -63,7 +63,9 @@ else:
             print '\n\nError: Images must be the same size!'
             print 'Skipping: ', str(sys.argv[i])
         else:
-            
+            col = i-2;
+            while (col>199):
+                col = col-200
             print 'Creating transverse plane slices..'
             imT=np.array(np.reshape(np.repeat(im1,3),[Ishape[0],Ishape[1],Ishape[2],3]),np.uint16)
             print 'Colouring transverse plane and adding to final image..'
