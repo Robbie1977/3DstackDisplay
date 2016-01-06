@@ -69,10 +69,10 @@ else:
             print 'Creating transverse plane slices..'
             imT=np.array(np.reshape(np.repeat(im1,3),[Ishape[0],Ishape[1],Ishape[2],3]),np.uint16)
             print 'Colouring transverse plane and adding to final image..'
-            imN=np.add(np.uint16(np.multiply(imT,np.reshape(np.tile((colourL[(i-2)]/255.0),Tsize),Tshape))),imN)
+            imN=np.add(np.uint16(np.multiply(imT,np.reshape(np.tile((colourL[col]/255.0),Tsize),Tshape))),imN)
             imT=None
             refFN = refFN + '\n\\cf' + str((i-1)) + ' \n' + str(sys.argv[i]) + '\\line'
-            refSS = refSS + '\\red' + str(colourL[(i-2)][0]) + '\\green' + str(colourL[(i-2)][1]) +'\\blue' + str(colourL[(i-2)][2]) + ';'
+            refSS = refSS + '\\red' + str(colourL[col][0]) + '\\green' + str(colourL[col][1]) +'\\blue' + str(colourL[col][2]) + ';'
             gc.collect()
             
 #            print 'Finalising colour merge..'
